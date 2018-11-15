@@ -34,9 +34,5 @@ Header.propTypes = {
     branding: PropTypes.string.isRequired
 }
 
-const headingStyle = {
-    backgroundColor: "lightgreen",
-    borderRadius: "3px"
-}
 
 export default Header

@@ -30,17 +30,18 @@ class Contacts extends Component {
         const { contacts } = this.state;
 
         return (
-            // Loop through contacts array, set props to each contact component
-            <div>
+            // Replace unnecessary html tags
+            <React.Fragment> 
+            {/* Loop through contacts array, set props to each contact component */}
                 {contacts.map(c => (
                     <Contact 
                         key={c.id}
-                        // contact is a (deconstructed) prop, taken from the imported Contact component
+                        // "contact" is a (deconstructed) prop, taken from the imported Contact component
                         contact={c}
                     />
                 ))}
                 
-            </div>
+            </React.Fragment>
         )
     }
 }
