@@ -1,49 +1,34 @@
 import React, { Component } from 'react';
 import Contact from './Contact';
 
+import { Consumer } from '../context';
+
 class Contacts extends Component {
-    state = {
-        // contacts array of objects
-        contacts: [
-            {
-                id: 1,
-                name: "Bruce Wayne",
-                email: "bruce@wayneenterprises.com",
-                phone: "666-666-666"
-            },
-            {
-                id: 2,
-                name: "Selina Kile",
-                email: "selina@wayneenterprises.com",
-                phone: "999-999-999"
-            },
-            {
-                id: 3,
-                name: "Joker",
-                email: "joker@jokerstudios.com",
-                phone: "000-000-000"
-            }
-        ]
-    }
         
     render() {
-        const { contacts } = this.state;
-
         return (
-            // Replace unnecessary html tags
-            <React.Fragment> 
-            {/* Loop through contacts array, set props to each contact component */}
-                {contacts.map(c => (
-                    <Contact 
-                        key={c.id}
-                        // "contact" is a (deconstructed) prop, taken from the imported Contact component
-                        contact={c}
-                    />
-                ))}
-                
-            </React.Fragment>
+
+            <Consumer>
+                {value => {
+                    const { contacts } = value;
+                    return (
+
+                        <React.Fragment> 
+                        {/* Set props to each contact component */}
+                            {contacts.map(item => (
+                                <Contact 
+                                    key={item.id}
+                                    // "contact" is a (deconstructed) prop, taken from Contact component
+                                    contact={item}
+                                />
+                            ))}
+                        </React.Fragment>
+
+                    )
+                }}
+            </Consumer>
         )
     }
 }
 
-export default Contacts
+export default Contacts;
