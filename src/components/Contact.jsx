@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
+import { Consumer } from '../context';
 
 class Contact extends Component {
     state = {
@@ -14,29 +15,45 @@ class Contact extends Component {
         })
     }
 
+    onDeleteClick = (id, dispatch) => {
+        dispatch( {type: 'DELETE_CONTACT', payload: id});
+    }
+
     render() {
-        const { contact } = this.props;
+        const { id, name, email, phone } = this.props.contact;
         const { showContactInfo } = this.state;
 
         return (
 
-            <div className="card card-body mb-3">
-                <h4>{ contact.name } {" "}
-                <i onClick={ this.onShowClick } className="fas fa-sort-down" style={{ cursor: "pointer" }} />
-                <i className="fas fa-times" style={{ cursor: "pointer", color: "red", float: "right" }}></i>
-                </h4>
+            <Consumer>
+                {value => {
+                    const { dispatch } = value;
+                    return (
+                        <div className="card card-body mb-3">
+                            <h4>{ name } {" "}
 
-                { showContactInfo ? (
-                    <ul className="list-group">
-                        <li className="list-group-item">
-                            Email: { contact.email }
-                        </li>
-                        <li className="list-group-item">
-                            Phone: { contact.phone }
-                        </li>
-                    </ul>
-                ) : null}
-            </div>
+                            <i onClick={ this.onShowClick } className="fas fa-sort-down" style={{ cursor: "pointer" }} />
+
+                            <i onClick={ this.onDeleteClick.bind(this, id, dispatch) } className="fas fa-times" style={{ cursor: "pointer", color: "red", float: "right" }} />
+
+                            </h4>
+
+                            { showContactInfo ? (
+                                <ul className="list-group">
+                                    <li className="list-group-item">
+                                        Email: { email }
+                                    </li>
+                                    <li className="list-group-item">
+                                        Phone: { phone }
+                                    </li>
+                                </ul>
+                            ) : null}
+                        </div>
+
+                    )}
+                }
+            </Consumer>
+
         );
     }
 }
